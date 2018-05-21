@@ -3,16 +3,15 @@ from collections import OrderedDict
 import asyncio
 
 
-def reader(aiofile, delimeter=',', quotechar='"', encoding='ascii'):
-    return AioCSVReader(aiofile, delimeter, quotechar, encoding)
+def reader(aiofile, delimeter=',', quotechar='"'):
+    return AioCSVReader(aiofile, delimeter, quotechar)
 
 
 class AioCSVReader:
-    def __init__(self, aiofile, delimeter, quotechar, encoding):
+    def __init__(self, aiofile, delimeter, quotechar):
         self._aiofile = aiofile
         self._delimeter = delimeter
-        self._quotechar = quotechar.encode(encoding)
-        self._encoding = encoding
+        self._quotechar = quotechar
         self.line_num = 0
 
     def __aiter__(self):
@@ -22,7 +21,9 @@ class AioCSVReader:
         line = await self._aiofile.readline()
         if line:
             self.line_num += 1
-            return line.strip().replace(self._quotechar, b'').decode(self._encoding).split(self._delimeter)
+            if not isinstance(line, str):
+                raise TypeError('iterator should return strings, not bytes (did you open the file in text mode?)')
+            return line.strip().replace(self._quotechar, '').split(self._delimeter)
         else:
             raise StopAsyncIteration
 
@@ -30,8 +31,8 @@ class AioCSVReader:
 
 
 class AioDictReader(AioCSVReader):
-    def __init__(self, aiofile, delimeter=',', quotechar='"', encoding='ascii'):
-        super().__init__(aiofile, delimeter, quotechar, encoding)
+    def __init__(self, aiofile, delimeter=',', quotechar='"'):
+        super().__init__(aiofile, delimeter, quotechar)
         self.fieldnames = None
 
     async def __anext__(self):
