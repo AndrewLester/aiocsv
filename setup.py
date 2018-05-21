@@ -1,12 +1,11 @@
 from setuptools import setup
 
-setup(name='schoolopy',
-      version='0.2.0',
-      description='A Python wrapper for Schoology\'s API.',
-      url='https://github.com/ErikBoesen/schoolopy',
-      author='Erik Boesen',
-      author_email='me@erikboesen.com',
+setup(name='aiocsv',
+      version='0.0.1',
+      description='A Python csv parser for asyncio',
+      url='https://github.com/AndrewLester/aiocsv',
+      author='Andrew Lester',
       license='MIT',
-      packages=['schoolopy'],
+      packages=['asyncio', 'aiofiles'],
       install_requires=['aiofiles'],
       zip_safe=False)
