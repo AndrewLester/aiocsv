@@ -1,6 +1,5 @@
 import aiofiles
 from collections import OrderedDict
-import asyncio
 
 
 def reader(aiofile, delimeter=',', quotechar='"'):

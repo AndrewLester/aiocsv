@@ -6,6 +6,6 @@ setup(name='aiocsv',
       url='https://github.com/AndrewLester/aiocsv',
       author='Andrew Lester',
       license='MIT',
-      packages=['asyncio', 'aiofiles'],
+      packages=['aiocsv'],
       install_requires=['aiofiles'],
       zip_safe=False)
